@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Be My Friend</title>
+    <title>Friend Hoba?</title>
     <style>
       * {
         box-sizing: border-box;
@@ -12,32 +12,180 @@
       }
 
       body {
-        font-family: "Comic Sans MS", "Trebuchet MS", sans-serif;
         min-height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #ffd6e7, #ffeccf, #d8f3ff);
-        overflow: hidden;
+        background: radial-gradient(circle at top left, #ff9acf 0%, #ffd6e7 40%, #f9f1ff 100%);
+        font-family: 'Poppins', sans-serif;
+        padding: 24px;
       }
 
-      .container {
-        width: 90%;
-        max-width: 650px;
-        background: rgba(255, 255, 255, 0.92);
-        border-radius: 28px;
-        padding: 40px 30px;
+      .card {
+        width: 100%;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 32px;
+        padding: 36px 28px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
         text-align: center;
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-        border: 4px solid #fff;
         position: relative;
+      }
+
+      .emoji {
+        font-size: 3rem;
+        margin-bottom: 18px;
       }
 
       h1 {
         font-size: 2.2rem;
         color: #ff4f87;
-        margin-bottom: 18px;
+        margin-bottom: 12px;
       }
+
+      p {
+        color: #4a4a4a;
+        margin-bottom: 30px;
+        line-height: 1.7;
+        font-size: 1rem;
+      }
+
+      .btn-area {
+        position: relative;
+        width: 100%;
+        height: 140px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .btn-area button {
+        position: absolute;
+        min-width: 140px;
+        padding: 14px 22px;
+        border-radius: 999px;
+        border: none;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      #yesBtn {
+        background: linear-gradient(135deg, #ff81b9, #ff5eb4);
+        color: white;
+        left: 25%;
+      }
+
+      #noBtn {
+        background: #f3f3f3;
+        color: #333;
+        left: 55%;
+      }
+
+      #yesBtn:hover,
+      #noBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 26px rgba(255, 92, 141, 0.2);
+      }
+
+      .hearts {
+        margin-top: 26px;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="emoji" id="emoji">🥺</div>
+      <h1 id="title">Will you be my friend Ripti G??</h1>
+      <p id="text">hehe ✨</p>
+
+      <div class="btn-area" id="btnArea">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+      </div>
+
+      <div class="hearts" id="hearts">💕 🌸 💕</div>
+    </div>
+
+    <script>
+      const title = document.getElementById('title');
+      const text = document.getElementById('text');
+      const emoji = document.getElementById('emoji');
+      const noBtn = document.getElementById('noBtn');
+      const yesBtn = document.getElementById('yesBtn');
+      const hearts = document.getElementById('hearts');
+      const btnArea = document.getElementById('btnArea');
+
+      let noCount = 0;
+      let dodgeMode = false;
+
+      noBtn.addEventListener('click', (e) => {
+        if (dodgeMode) {
+          e.preventDefault();
+          moveNoButton();
+          return;
+        }
+
+        noCount++;
+        if (noCount === 1) {
+          title.textContent = 'Ami ki etoi kharap?';
+          text.textContent = 'Friend hoba? 😤😤';
+          emoji.textContent = '😤';
+        } else if (noCount === 2) {
+          title.textContent = 'Ajob to??';
+          text.textContent = 'Sharadin gaan shunabo 🥹🥹';
+          emoji.textContent = '🥹';
+        } else if (noCount >= 3) {
+          title.textContent = 'Aab man bhi jao 🙏';
+          text.textContent = '😌😁';
+          emoji.textContent = '😚✨';
+          dodgeMode = true;
+          moveNoButton();
+        }
+      });
+
+      function moveNoButton() {
+        const areaRect = btnArea.getBoundingClientRect();
+        const btnRect = noBtn.getBoundingClientRect();
+        const maxX = areaRect.width - btnRect.width;
+        const maxY = areaRect.height - btnRect.height;
+        const randomX = Math.max(0, Math.floor(Math.random() * maxX));
+        const randomY = Math.max(0, Math.floor(Math.random() * maxY));
+        noBtn.style.left = randomX + 'px';
+        noBtn.style.top = randomY + 'px';
+      }
+
+      noBtn.addEventListener('mouseenter', () => {
+        if (dodgeMode) moveNoButton();
+      });
+
+      noBtn.addEventListener('touchstart', (e) => {
+        if (dodgeMode) {
+          e.preventDefault();
+          moveNoButton();
+        }
+      });
+
+      noBtn.addEventListener('pointerdown', (e) => {
+        if (dodgeMode) {
+          e.preventDefault();
+          moveNoButton();
+        }
+      });
+
+      yesBtn.addEventListener('click', () => {
+        title.textContent = 'YAYYYYY!!!!';
+        text.innerHTML = 'Cholo Fuchka khai hehe 😋<br>Tui boila dakte diba? 😍😍';
+        emoji.textContent = '🥳🎉';
+        hearts.textContent = '💖💖 BONDHUUUU 💖💖';
+        btnArea.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>
 
 
 
